@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Expenses.css";
-import ExpenseItem from "./ExpenseItem";
 import ExpensesFilter from "./ExpensesFilter";
+import ExpensesList from "./ExpensesList";
 import Card from "../UI/Card";
 
 const Expenses = ({ expensesData }) => {
@@ -10,6 +10,11 @@ const Expenses = ({ expensesData }) => {
   const onRecievingNewYearValue = (selectedNewYear) => {
     setFilteredYear(selectedNewYear);
   };
+
+  const filteredExpenses = expensesData.filter(
+    (expense) => expense.date.getFullYear().toString() === filteredYear
+  );
+
   return (
     <div>
       {/*selectedFilteredYear is sent baack to ExpensesFilter for two way binding*/}
@@ -19,13 +24,7 @@ const Expenses = ({ expensesData }) => {
           selectedFilteredYear={filteredYear}
         />
 
-        {expensesData.map((item) => (
-          <ExpenseItem
-            date={item.date}
-            title={item.title}
-            amount={item.amount}
-          />
-        ))}
+        <ExpensesList filteredExpenses={filteredExpenses} />
       </Card>
     </div>
   );
