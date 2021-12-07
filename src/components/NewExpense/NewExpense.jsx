@@ -1,6 +1,9 @@
+import { useState } from "react";
 import ExpenseForm from "./ExpenseForm";
 import "./NewExpense.css";
 const NewExpense = ({ onAddNewExpense }) => {
+  const [form, setForm] = useState(false);
+
   const submitExpenseDataHandler = (enteredExpenseData) => {
     const expenseData = {
       ...enteredExpenseData,
@@ -8,9 +11,23 @@ const NewExpense = ({ onAddNewExpense }) => {
     };
     onAddNewExpense(expenseData);
   };
+  const addFormHandler = () => {
+    setForm(true);
+  };
+  const toggleFormHandler = () => {
+    setForm(false);
+  };
+
   return (
     <div className="new-expense">
-      <ExpenseForm onSubmitExpenseData={submitExpenseDataHandler} />
+      {!form ? (
+        <button onClick={addFormHandler}>Add Expenses</button>
+      ) : (
+        <ExpenseForm
+          onSubmitExpenseData={submitExpenseDataHandler}
+          toggleFormHandler={toggleFormHandler}
+        />
+      )}
     </div>
   );
 };
